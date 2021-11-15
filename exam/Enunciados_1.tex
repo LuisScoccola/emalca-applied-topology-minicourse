@@ -1,0 +1,145 @@
+\documentclass[12pt,reqno,oneside]{article}
+\usepackage[spanish]{babel}
+
+
+\usepackage[letterpaper,hmargin=0.9in,vmargin=0.8in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{mathbbol}
+\usepackage{fourier}
+\usepackage{soul}
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows,cd,calc}
+
+\usepackage{accsupp}
+\DeclareRobustCommand\squelch[1]{%
+    \BeginAccSupp{method=plain,ActualText={}}#1\EndAccSupp{}}
+
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\definecolor{darkgreen}{rgb}{0,0.45,0}
+\hypersetup{colorlinks,urlcolor=blue,citecolor=darkgreen,linkcolor=darkgreen,linktocpage}
+\usepackage[capitalize]{cleveref}
+
+%% Notes
+\def\noteson{\gdef\note##1{\noindent{\color{blue}[##1]}}}
+\gdef\notesoff{\gdef\note##1{\null}}
+\noteson
+%%
+
+%% draft watermark
+\usepackage{background}
+\backgroundsetup{
+  position=current page.west,
+  angle=90,
+  nodeanchor=east,
+  vshift=-3mm,
+  opacity=0.1,
+  scale=4,
+  contents=DRAFT,
+  color=black
+}
+%%
+
+
+%% Custom environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{pregunta}[theorem]{Ejercicio}
+
+%% Custom symbols
+
+\newcommand{\define}[1]{\textbf{\boldmath{#1}}}
+
+\newcommand{\snap}{\mathsf{S}}
+\newcommand{\sgn}{\mathsf{sgn}}
+\newcommand{\Rect}{\mathsf{Rect}}
+\newcommand{\rect}{\mathsf{rect}}
+\newcommand{\inproj}{\mathsf{inProj}}
+\newcommand{\gldim}{\mathsf{gl.dim}}
+\newcommand{\projdim}{\mathsf{proj.dim}}
+
+\renewcommand{\ker}{\mathsf{ker}}
+\newcommand{\coker}{\mathsf{coker}}
+\newcommand{\im}{\mathsf{im}}
+
+\newcommand{\vect}{\mathsf{vec}}
+\newcommand{\persmod}{\mathsf{pmod}}
+\newcommand{\grmod}{\mathsf{grmod}}
+\newcommand{\modcat}{\mathsf{mod}}
+
+\newcommand{\field}{\mathbb{k}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\G}{\mathbb{G}}
+\newcommand{\RR}{\mathbf{R}}
+\newcommand{\ZZ}{\mathbf{Z}}
+\newcommand{\GG}{\mathbf{G}}
+\newcommand{\BBB}{\mathcal{B}}
+\newcommand{\CCC}{\mathcal{C}}
+\newcommand{\EEE}{\mathcal{E}}
+\newcommand{\FFF}{\mathcal{F}}
+\newcommand{\LLL}{\mathcal{L}}
+\newcommand{\TTT}{\mathcal{T}}
+\newcommand{\PPP}{\mathcal{P}}
+\newcommand{\RRR}{\mathcal{R}}
+\newcommand{\SSS}{\mathcal{S}}
+\newcommand{\UUU}{\mathcal{U}}
+\newcommand{\XXX}{\mathcal{X}}
+
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+
+\title{Enunciados 1: Clustering}
+\date{Topolog\'{i}a aplicada -- Emalca 2021 }
+\author{Docentes: Jose Perea y Luis Scoccola, Northeastern University}
+
+\begin{document}
+\maketitle
+%\tableofcontents
+
+\section{Instrucciones generales}
+%
+\paragraph{C\'odigo.}
+Las preguntas hacen referencia a el c\'odigo en \texttt{Notebook\_1.ipynb} que puede encontrarse en la p\'agina de la materia
+\url{http://luisscoccola.github.io/emalca2021}.
+
+\paragraph{C\'omo responder.}
+Por favor responda a las preguntas en las siguiente secci\'on. 
+Trate de ser lo m\'as preciso posible y, si no usa \LaTeX~para escribir sus respuestas, escriba lo m\'as claro posible.
+
+\paragraph{C\'omo entregar el examen.}
+\textit{Al final del curso}, se deber\'a entregar \textit{un solo archivo} con las respuestas a las preguntas en los Enunciados 1, 2 y 3, que se econtrar\'an en la p\'agina.
+El mail deber\'a tener subject \texttt{examen topologia aplicada -- [SU NOMBRE COMPLETO]}, y deber\'a ser enviado a \squelch{\texttt{luis.scoccola@gmail.com}}.
+
+\section{Preguntas}
+\begin{pregunta}
+	Tome una captura de pantalla del mejor output que haya podido conseguir para los datasets 1, 2, 3 y 4, e incluyala en las soluciones.
+
+	\noindent
+	\textit{Asegurese de incluir los valores de \texttt{KERNEL\_BANDWIDTH}, \texttt{RIPS\_SCALE}, y \texttt{PERSISTENCE\_THRESHOLD} que haya utilizado para cada dataset.}
+\end{pregunta}
+
+\begin{pregunta}
+	Logr\'o encontrar un clustering adecuado para el dataset 3?
+	Si no lo logr\'o, explique por qu\'e el m\'etodo no es capaz de encontrar tal clustering.
+\end{pregunta}
+
+\begin{pregunta}[Opcional]
+	Describa un m\'etodo de clustering basado en persistencia en el que \texttt{RIPS\_SCALE} no deba estar necesariamente fijo.
+	Podr\'ia este m\'etodo mejorar el resultado del algoritmo en el dataset 3?
+\end{pregunta}
+
+\end{document}
