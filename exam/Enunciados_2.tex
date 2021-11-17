@@ -1,0 +1,179 @@
+\documentclass[12pt,reqno,oneside]{article}
+\usepackage[spanish]{babel}
+
+
+\usepackage[letterpaper,hmargin=0.9in,vmargin=0.8in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{mathbbol}
+\usepackage{fourier}
+\usepackage{soul}
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows,cd,calc}
+
+\usepackage{accsupp}
+\DeclareRobustCommand\squelch[1]{%
+    \BeginAccSupp{method=plain,ActualText={}}#1\EndAccSupp{}}
+
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\definecolor{darkgreen}{rgb}{0,0.45,0}
+\hypersetup{colorlinks,urlcolor=blue,citecolor=darkgreen,linkcolor=darkgreen,linktocpage}
+\usepackage[capitalize]{cleveref}
+
+%% Notes
+\def\noteson{\gdef\note##1{\noindent{\color{blue}[##1]}}}
+\gdef\notesoff{\gdef\note##1{\null}}
+\noteson
+%%
+
+%%% draft watermark
+%\usepackage{background}
+%\backgroundsetup{
+%  position=current page.west,
+%  angle=90,
+%  nodeanchor=east,
+%  vshift=-3mm,
+%  opacity=0.1,
+%  scale=4,
+%  contents=DRAFT,
+%  color=black
+%}
+%%%
+
+
+%% Custom environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{pregunta}[theorem]{Ejercicio}
+
+%% Custom symbols
+
+\newcommand{\define}[1]{\textbf{\boldmath{#1}}}
+
+\newcommand{\snap}{\mathsf{S}}
+\newcommand{\sgn}{\mathsf{sgn}}
+\newcommand{\Rect}{\mathsf{Rect}}
+\newcommand{\rect}{\mathsf{rect}}
+\newcommand{\inproj}{\mathsf{inProj}}
+\newcommand{\gldim}{\mathsf{gl.dim}}
+\newcommand{\projdim}{\mathsf{proj.dim}}
+
+\renewcommand{\ker}{\mathsf{ker}}
+\newcommand{\coker}{\mathsf{coker}}
+\newcommand{\im}{\mathsf{im}}
+
+\newcommand{\vect}{\mathsf{vec}}
+\newcommand{\persmod}{\mathsf{pmod}}
+\newcommand{\grmod}{\mathsf{grmod}}
+\newcommand{\modcat}{\mathsf{mod}}
+
+\newcommand{\field}{\mathbb{k}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\G}{\mathbb{G}}
+\newcommand{\RR}{\mathbf{R}}
+\newcommand{\ZZ}{\mathbf{Z}}
+\newcommand{\GG}{\mathbf{G}}
+\newcommand{\BBB}{\mathcal{B}}
+\newcommand{\CCC}{\mathcal{C}}
+\newcommand{\EEE}{\mathcal{E}}
+\newcommand{\FFF}{\mathcal{F}}
+\newcommand{\LLL}{\mathcal{L}}
+\newcommand{\TTT}{\mathcal{T}}
+\newcommand{\PPP}{\mathcal{P}}
+\newcommand{\RRR}{\mathcal{R}}
+\newcommand{\SSS}{\mathcal{S}}
+\newcommand{\UUU}{\mathcal{U}}
+\newcommand{\XXX}{\mathcal{X}}
+
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+
+\title{Enunciados 2: persistencia para an\'alisis de series de tiempo}
+\date{Topolog\'{i}a aplicada -- Emalca 2021 }
+\author{Docentes: Jose Perea y Luis Scoccola, Northeastern University}
+
+\begin{document}
+\maketitle
+%\tableofcontents
+
+\section{Instrucciones generales}
+%
+\paragraph{C\'odigo.}
+Las preguntas est\'an relacionadas al c\'odigo en \texttt{Notebook\_2.ipynb} que puede encontrarse en la p\'agina de la materia
+\url{http://luisscoccola.github.io/emalca2021}.
+
+\paragraph{C\'omo responder.}
+Por favor responda a las preguntas de la siguiente secci\'on. 
+Trate de ser lo m\'as preciso posible y, si no usa \LaTeX~para escribir sus respuestas, escriba lo m\'as claro posible.
+
+\paragraph{C\'omo entregar el examen.}
+\textit{Al final del curso}, se deber\'a entregar \textit{un solo archivo} con las respuestas a las preguntas en los Enunciados 1, 2 y 3, que se econtrar\'an en la p\'agina.
+La fecha l\'imite para entregar las soluciones es 11:59pm del domingo 21 de noviembre, 2021.
+El mail deber\'a tener subject \texttt{examen topologia aplicada -- [SU NOMBRE COMPLETO]}, y deber\'a ser enviado a \squelch{\texttt{luis.scoccola[arroba]gmail.com}}.
+
+\section{Preguntas de An\'alisis de series de tiempo}
+
+Fije $L\in \mathbb{N}$ y sea $f(t) = \sin(Lt)$ para $t\in \mathbb{R}$. 
+Recurde que la ventana deslizante de $f$ en $t$, con par\'ametros $d \in \mathbb{N}$ 
+y $\tau >0$, est\'a dada por el vector 
+\[
+SW_{d,\tau} f (t) = 
+\begin{bmatrix}
+f(t) \\ f(t + \tau) \\  \vdots \\ f(t + d\tau)
+\end{bmatrix}
+\in \mathbb{R}^{d+1}
+\]
+El objetivo de este ejercicio es determinar   $d $ y $\tau$ \'optimos, 
+de tal forma que la nube de ventanas deslizantes 
+\[
+\mathbb{SW}_{d,\tau} f = \big\{SW_{d,\tau} f(t) : t\in [0,2\pi]\big\}
+\]
+tenga persistencia m\'axima en dimensi\'on 1. 
+En otras palabras, queremos maximizar
+\begin{equation}\label{eq:MaxPers}
+mp = \max\Big\{b - a\, :\, (a,b) \in \mathsf{dgm}_1(\mathbb{SW}_{d,\tau} f )\Big\}
+\end{equation}
+
+\begin{pregunta}
+    Si $f(t) = \sin(Lt)$, muestre que existen vectores $\mathbf{u,v} \in \mathbb{R}^{d+1}$  tales que
+    \begin{equation}\label{eq:SW_trig}
+    SW_{d,\tau} f(t) = \sin(Lt)\mathbf{u} + \cos(Lt) \mathbf{v}
+    \end{equation}
+    para todo $t\in \mathbb{R}$. 
+    
+    \noindent \textbf{Hint:} 
+    $\sin(x + y) = \sin(x)\cos(y) + \cos(x)\sin(y)$.
+\end{pregunta}
+
+\begin{pregunta}
+	Note que si los vectores $\mathbf{u,v}$ son linealmente independientes, entonces la curva  data por la ecuaci\'on (\ref{eq:SW_trig}) es una elipse planar. Cual es el m\'inimo valor que puede tomar $d$ si queremos que $\mathbf{u}$ y $\mathbf{v}$ sean linealmente independientes?
+\end{pregunta}
+\begin{pregunta}
+    Trate de convencerse del siguiente hecho: de todas las elipses planares de per\'imetro fijo, el c\'irculo es el que tiene  1-persistencia m\'axima ($mp$ en ecuaci\'on (\ref{eq:MaxPers})) m\'as grande. 
+    Dado este hecho y $d\in \mathbb{N}$ fijo, determine valores de $\tau > 0$
+    de tal forma que la ecuaci\'on (\ref{eq:SW_trig}) describa un c\'irculo (redondo).
+    
+    \noindent \textbf{Hint:} Que valor deber\'ia tener el producto punto de $\mathbf{u}$ y $\mathbf{v}$? Como deber\'ian ser sus longitudes? 
+    Las f\'ormulas  para $\cos(2x)$ y $\sin(2y)$, y  las ecuaciones de Lagrange
+    \begin{eqnarray*}
+    \sum_{j = 0 }^d \sin(2Lj\tau) &=& \frac{\sin(L(d+1)\tau)\sin(Ld\tau)}{\sin(L\tau)} \\
+        \sum_{j = 0 }^d \cos(2Lj\tau) &=& \frac{\sin(L(d+1)\tau)\cos(Ld\tau)}{\sin(L\tau)}
+    \end{eqnarray*}
+    pueden ser \'utiles. 
+\end{pregunta}
+
+\end{document}
